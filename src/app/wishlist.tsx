@@ -1,7 +1,9 @@
+import Rating from "@/components/Rating";
 import { useState } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import { scale } from "react-native-size-matters";
 import BackButton from "../components/BackButton";
+import Wishlisted from "../components/Wishlisted";
 
 const wishlist = () => {
   const [totalItems, setTotalItems] = useState(0);
@@ -9,6 +11,11 @@ const wishlist = () => {
   const [productDescription, setProductDescription] = useState(
     "Product Description",
   );
+  const [productPrice, setProductPrice] = useState(100);
+  const [productImage, setProductImage] = useState(
+    "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?q=80&w=872&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
+  );
+  const [isWishlist, setIsWishlist] = useState(true);
   return (
     <View style={styles.container}>
       <View
@@ -40,17 +47,20 @@ const wishlist = () => {
       <View style={[styles.productCard]}>
         <Image
           source={{
-            uri: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?q=80&w=872&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
+            uri: productImage,
           }}
           style={styles.productImage}
         />
         <View style={styles.productInfo}>
           <Text style={[styles.productTitle]}>{productTitle}</Text>
           <Text style={{ color: "#6B7280" }}>{productDescription}</Text>
-          <Text style={[styles.productPrice]}>$100</Text>
+          <Text style={[styles.productPrice]}>${productPrice.toFixed(2)}</Text>
+          <Rating />
         </View>
         <View style={{ paddingHorizontal: scale(10) }}>
-          <Text style={{ color: "#6B7280" }}>Remove</Text>
+          <View style={styles.wishlistButton}>
+            <Wishlisted />
+          </View>
         </View>
       </View>
     </View>
@@ -72,6 +82,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   productCard: {
+    position: "relative",
     flexDirection: "row",
     height: scale(120),
     alignItems: "center",
@@ -96,7 +107,14 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   productPrice: {
-    fontSize: scale(18),
+    fontSize: scale(16),
     fontWeight: "bold",
+  },
+  wishlistButton: {
+    position: "absolute",
+    right: scale(5),
+    bottom: scale(10),
+    borderRadius: scale(10),
+    padding: scale(10),
   },
 });
