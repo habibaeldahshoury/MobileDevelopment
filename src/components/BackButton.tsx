@@ -1,10 +1,11 @@
 import Entypo from "@expo/vector-icons/Entypo";
+import { router } from "expo-router";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { scale } from "react-native-size-matters";
 
 const BackButton = () => {
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={() => router.back()}>
       <Entypo name="chevron-left" size={scale(25)} color="black" />
     </TouchableOpacity>
   );

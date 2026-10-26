@@ -1,35 +1,35 @@
 import Rating from "@/components/Rating";
-import Wishlisted from "@/components/Wishlisted";
-import { Image, StyleSheet, Text, View } from "react-native";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { scale } from "react-native-size-matters";
+import type { Product } from "../data/products";
 
 type ProductCardWishlistProps = {
-  productTitle: string;
-  productDescription: string;
-  productPrice: number;
-  productImage: string;
+  product: Product;
+  onToggleWishlist?: () => void;
 };
 
 const ProductCardWishlist = ({
-  productTitle,
-  productDescription,
-  productPrice,
-  productImage,
+  product,
+  onToggleWishlist,
 }: ProductCardWishlistProps) => {
   return (
-    <View style={[styles.productCard]}>
-      <Image source={{ uri: productImage }} style={styles.productImage} />
+    <View style={styles.productCard}>
+      <Image source={{ uri: product.image }} style={styles.productImage} />
       <View style={styles.productInfo}>
-        <Text style={[styles.productTitle]}>{productTitle}</Text>
-        <Text style={{ color: "#6B7280" }}>{productDescription}</Text>
-        <Text style={[styles.productPrice]}>${productPrice.toFixed(2)}</Text>
+        <Text style={styles.productTitle}>{product.title}</Text>
+        <Text style={{ color: "#6B7280" }}>
+          {product.gender} | Size: {product.size}
+        </Text>
+        <Text style={styles.productPrice}>${product.price.toFixed(2)}</Text>
         <Rating />
       </View>
-      <View style={{ paddingHorizontal: scale(10) }}>
-        <View style={styles.wishlistButton}>
-          <Wishlisted />
-        </View>
-      </View>
+      <TouchableOpacity
+        style={styles.wishlistButton}
+        onPress={onToggleWishlist}
+      >
+        <FontAwesome name="heart" size={24} color="#4F46E5" />
+      </TouchableOpacity>
     </View>
   );
 };
@@ -46,6 +46,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
     borderRadius: scale(10),
     marginHorizontal: scale(20),
+    marginVertical: scale(4),
   },
   productImage: {
     width: scale(100),
@@ -55,12 +56,16 @@ const styles = StyleSheet.create({
   },
   productInfo: {
     flex: 1,
+    height: scale(100),
     flexDirection: "column",
     paddingHorizontal: scale(10),
+    justifyContent: "space-between",
+    alignSelf: "center",
   },
   productTitle: {
     fontSize: scale(16),
     fontWeight: "bold",
+    paddingRight: scale(35),
   },
   productPrice: {
     fontSize: scale(16),
@@ -68,9 +73,8 @@ const styles = StyleSheet.create({
   },
   wishlistButton: {
     position: "absolute",
-    right: scale(5),
-    bottom: scale(10),
-    borderRadius: scale(10),
+    top: scale(5),
+    right: scale(10),
     padding: scale(10),
   },
 });

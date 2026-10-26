@@ -4,7 +4,7 @@ import { StyleSheet, TouchableOpacity } from "react-native";
 import { scale } from "react-native-size-matters";
 
 const Wishlisted = () => {
-  const [isWishlisted, setIsWishlisted] = useState(false);
+  const [isWishlisted, setIsWishlisted] = useState(true);
   return (
     <TouchableOpacity
       style={styles.container}
