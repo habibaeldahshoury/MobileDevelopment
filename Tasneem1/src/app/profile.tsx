@@ -3,7 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
 import {Keyboard,Platform,Pressable,ScrollView,StyleSheet,Text,TextInput, View,} from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-
+import { Palette } from '@/constants/palette';
 
 const addresses = ['Cairo, Obour, Egypt', 'Giza, Egypt', 'Madinaty, Egypt', 'Alexandria, Egypt'];
 
@@ -34,6 +34,7 @@ function MenuRow({ label, isLast, showChevron = true, expanded, onPress }: MenuR
           <SymbolView
             name={{ ios: 'chevron.right', android: 'chevron_right', web: 'chevron_right' }}
             size={16}
+            tintColor={Palette.textSecondary}
           />
         </View>
       ) : null}
@@ -127,7 +128,7 @@ export default function ProfileScreen() {
               <TextInput
                 accessibilityLabel="Name"
                 placeholder="Name"
-
+                placeholderTextColor={Palette.textSecondary}
                 value={draftName}
                 onChangeText={setDraftName}
                 style={styles.input}
@@ -138,7 +139,7 @@ export default function ProfileScreen() {
               <TextInput
                 accessibilityLabel="Email"
                 placeholder="Email"
-
+                placeholderTextColor={Palette.textSecondary}
                 value={draftEmail}
                 onChangeText={setDraftEmail}
                 style={styles.input}
@@ -262,7 +263,7 @@ export default function ProfileScreen() {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-
+    backgroundColor: Palette.background,
   },
   content: {
     paddingHorizontal: 20,
@@ -273,20 +274,20 @@ const styles = StyleSheet.create({
     lineHeight: 32,
     fontWeight: '700',
     letterSpacing: -0.4,
-
+    color: Palette.text,
   },
   subtitle: {
     marginTop: 4,
     fontSize: 14,
     lineHeight: 20,
-
+    color: Palette.textSecondary,
   },
   profileCard: {
     alignItems: 'center',
     padding: 20,
-
+    backgroundColor: Palette.surface,
     borderWidth: 1,
-
+    borderColor: Palette.border,
     borderRadius: 16,
   },
   avatar: {
@@ -295,35 +296,35 @@ const styles = StyleSheet.create({
     borderRadius: 999,
     alignItems: 'center',
     justifyContent: 'center',
-
+    backgroundColor: Palette.primarySoft,
   },
   avatarText: {
     fontSize: 26,
     fontWeight: '700',
-
+    color: Palette.primary,
   },
   name: {
     marginTop: 12,
     fontSize: 18,
     fontWeight: '700',
-
+    color: Palette.text,
   },
   email: {
     marginTop: 2,
     fontSize: 13,
-
+    color: Palette.textSecondary,
   },
   editButton: {
     marginTop: 14,
     paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: 12,
-   
+    backgroundColor: Palette.primary,
   },
   editButtonText: {
     fontSize: 13,
     fontWeight: '600',
-
+    color: Palette.surface,
   },
   form: {
     alignSelf: 'stretch',
@@ -334,11 +335,11 @@ const styles = StyleSheet.create({
     height: 44,
     paddingHorizontal: 12,
     borderWidth: 1,
-
+    borderColor: Palette.border,
     borderRadius: 12,
-
+    backgroundColor: Palette.background,
     fontSize: 14,
-
+    color: Palette.text,
   },
   formActions: {
     flexDirection: 'row',
@@ -350,19 +351,20 @@ const styles = StyleSheet.create({
     paddingVertical: 11,
     borderRadius: 12,
     borderWidth: 1,
-  
+    borderColor: Palette.border,
+    backgroundColor: Palette.surface,
   },
   cancelButtonText: {
     fontSize: 13,
     fontWeight: '600',
-  
+    color: Palette.textSecondary,
   },
   saveButton: {
     flex: 1,
     alignItems: 'center',
     paddingVertical: 11,
     borderRadius: 12,
-   
+    backgroundColor: Palette.primary,
   },
   saveButtonDisabled: {
     opacity: 0.5,
@@ -370,13 +372,13 @@ const styles = StyleSheet.create({
   saveButtonText: {
     fontSize: 13,
     fontWeight: '600',
-   
+    color: Palette.surface,
   },
   divider: {
     height: 1,
     alignSelf: 'stretch',
     marginVertical: 18,
-
+    backgroundColor: Palette.border,
   },
   statsRow: {
     flexDirection: 'row',
@@ -391,16 +393,16 @@ const styles = StyleSheet.create({
   statValue: {
     fontSize: 18,
     fontWeight: '700',
-
+    color: Palette.text,
   },
   statLabel: {
     fontSize: 12,
-
+    color: Palette.textSecondary,
   },
   statDivider: {
     width: 1,
     height: 28,
-
+    backgroundColor: Palette.border,
   },
   section: {
     gap: 8,
@@ -411,12 +413,12 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     letterSpacing: 0.8,
     textTransform: 'uppercase',
-
+    color: Palette.textSecondary,
   },
   menuCard: {
-
+    backgroundColor: Palette.surface,
     borderWidth: 1,
-
+    borderColor: Palette.border,
     borderRadius: 16,
     overflow: 'hidden',
   },
@@ -429,13 +431,13 @@ const styles = StyleSheet.create({
   },
   menuRowBorder: {
     borderBottomWidth: 1,
-
+    borderBottomColor: Palette.border,
   },
   menuLabel: {
     flex: 1,
     fontSize: 14,
     fontWeight: '600',
-
+    color: Palette.text,
   },
   chevronWrapper: {
     alignItems: 'center',
@@ -451,18 +453,18 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
     paddingVertical: 10,
     borderBottomWidth: 1,
-
+    borderBottomColor: Palette.border,
   },
   infoLabel: {
     fontSize: 12,
-
+    color: Palette.textSecondary,
   },
   infoValue: {
     flex: 1,
     textAlign: 'right',
     fontSize: 13,
     fontWeight: '600',
-
+    color: Palette.text,
   },
   detailRow: {
     paddingHorizontal: 14,
@@ -470,12 +472,12 @@ const styles = StyleSheet.create({
   },
   detailRowBorder: {
     borderBottomWidth: 1,
-
+    borderBottomColor: Palette.border,
   },
   detailText: {
     fontSize: 13,
     fontWeight: '500',
-
+    color: Palette.text,
   },
   logoutButton: {
     flexDirection: 'row',
@@ -483,15 +485,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     gap: 8,
     paddingVertical: 14,
-   
+    backgroundColor: Palette.surface,
     borderWidth: 1,
-
+    borderColor: Palette.border,
     borderRadius: 14,
   },
   logoutText: {
     fontSize: 14,
     fontWeight: '600',
-
+    color: Palette.textSecondary,
   },
   pressed: {
     opacity: 0.7,
