@@ -1,112 +1,88 @@
-import { useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { FlatList, Image, StyleSheet, Text, View } from "react-native";
 import { scale } from "react-native-size-matters";
 import BackButton from "../components/BackButton";
 import ProductCardWishlist from "../components/ProductCardWishlist";
+import { useProducts } from "../context/products";
 
-const wishlist = () => {
-  const [totalItems, setTotalItems] = useState(0);
-  const [productTitle, setProductTitle] = useState("Product Title");
-  const [productDescription, setProductDescription] = useState(
-    "Product Description",
-  );
-  const [productPrice, setProductPrice] = useState(100);
-  const [productImage, setProductImage] = useState(
-    "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?q=80&w=872&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
-  );
-  const [isWishlist, setIsWishlist] = useState(true);
+export default function WishlistScreen() {
+  const { products, isWishlisted, toggleWishlist } = useProducts();
+  const wishlist = products.filter((p) => isWishlisted(p.id));
+
   return (
     <View style={styles.container}>
-      <View
-        style={[
-          styles.header,
-          {
-            marginTop: scale(20),
-            marginHorizontal: scale(10),
-          },
-        ]}
-      >
+      <View style={styles.header}>
         <BackButton />
-        <Text style={[styles.text, { paddingHorizontal: scale(5) }]}>
-          My Wishlist
-        </Text>
+        <Text style={styles.title}>My Wishlist</Text>
       </View>
-      <Text
-        style={[
-          {
-            color: "#6B7280",
-            paddingHorizontal: scale(20),
-            paddingVertical: scale(10),
-          },
-        ]}
-      >
-        {totalItems} items
+
+      <Text style={styles.itemCount}>
+        {wishlist.length} {wishlist.length === 1 ? "item" : "items"}
       </Text>
 
-      <ProductCardWishlist
-        productTitle={productTitle}
-        productDescription={productDescription}
-        productPrice={productPrice}
-        productImage={productImage}
-      />
-      <ProductCardWishlist
-        productTitle={productTitle}
-        productDescription={productDescription}
-        productPrice={productPrice}
-        productImage={productImage}
-      />
-      <ProductCardWishlist
-        productTitle={productTitle}
-        productDescription={productDescription}
-        productPrice={productPrice}
-        productImage={productImage}
-      />
-      <ProductCardWishlist
-        productTitle={productTitle}
-        productDescription={productDescription}
-        productPrice={productPrice}
-        productImage={productImage}
-      />
-      <ProductCardWishlist
-        productTitle={productTitle}
-        productDescription={productDescription}
-        productPrice={productPrice}
-        productImage={productImage}
-      />
-      <ProductCardWishlist
-        productTitle={productTitle}
-        productDescription={productDescription}
-        productPrice={productPrice}
-        productImage={productImage}
-      />
-      <ProductCardWishlist
-        productTitle={productTitle}
-        productDescription={productDescription}
-        productPrice={productPrice}
-        productImage={productImage}
-      />
-      <ProductCardWishlist
-        productTitle={productTitle}
-        productDescription={productDescription}
-        productPrice={productPrice}
-        productImage={productImage}
+      <FlatList
+        data={wishlist}
+        keyExtractor={(p) => p.id}
+        renderItem={({ item }) => (
+          <ProductCardWishlist
+            product={item}
+            onToggleWishlist={() => toggleWishlist(item.id)}
+          />
+        )}
+        contentContainerStyle={{ paddingBottom: scale(20) }}
+        showsVerticalScrollIndicator={false}
+        ListEmptyComponent={
+          <View>
+            <Image
+              source={require("../../assets/images/noWishlistsIllustration.png")}
+              style={styles.emptyImage}
+            />
+            <Text style={styles.emptyTitle}>No wishlists yet</Text>
+            <Text style={styles.empty}>
+              Save the things you love and find them here later.
+            </Text>
+          </View>
+        }
       />
     </View>
   );
-};
-
-export default wishlist;
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#F9FAFB",
   },
-  text: {
+  title: {
     fontSize: scale(23),
     fontWeight: "bold",
+    paddingHorizontal: scale(5),
   },
   header: {
     flexDirection: "row",
+    marginTop: scale(20),
+    marginHorizontal: scale(10),
+    paddingTop: scale(30),
+  },
+  itemCount: {
+    color: "#6B7280",
+    paddingHorizontal: scale(20),
+    paddingVertical: scale(10),
+  },
+  empty: {
+    textAlign: "center",
+    color: "#94a3b8",
+    marginTop: scale(5),
+  },
+  emptyImage: {
+    width: scale(200),
+    height: scale(200),
+    alignSelf: "center",
+    marginTop: scale(20),
+  },
+  emptyTitle: {
+    textAlign: "center",
+    fontSize: scale(18),
+    fontWeight: "bold",
+    marginTop: scale(10),
   },
 });
