@@ -1,7 +1,15 @@
-import Rating from "@/components/Rating";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Link } from "expo-router";
+import {
+  Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { scale } from "react-native-size-matters";
+import Rating from "../components/Rating";
 import type { Product } from "../data/products";
 
 type ProductCardWishlistProps = {
@@ -14,23 +22,28 @@ const ProductCardWishlist = ({
   onToggleWishlist,
 }: ProductCardWishlistProps) => {
   return (
-    <View style={styles.productCard}>
-      <Image source={{ uri: product.image }} style={styles.productImage} />
-      <View style={styles.productInfo}>
-        <Text style={styles.productTitle}>{product.title}</Text>
-        <Text style={{ color: "#6B7280" }}>
-          {product.gender} | Size: {product.size}
-        </Text>
-        <Text style={styles.productPrice}>${product.price.toFixed(2)}</Text>
-        <Rating />
-      </View>
-      <TouchableOpacity
-        style={styles.wishlistButton}
-        onPress={onToggleWishlist}
-      >
-        <FontAwesome name="heart" size={24} color="#4F46E5" />
-      </TouchableOpacity>
-    </View>
+    <Link href={`/product/${product.id}` as any} asChild>
+      <Pressable style={styles.productCard}>
+        <Image source={{ uri: product.image }} style={styles.productImage} />
+        <View style={styles.productInfo}>
+          <Text style={styles.productTitle}>{product.title}</Text>
+          <Text style={{ color: "#6B7280" }}>
+            {product.gender} | Size: {product.size}
+          </Text>
+          <Text style={styles.productPrice}>${product.price.toFixed(2)}</Text>
+          <Rating />
+        </View>
+        <TouchableOpacity
+          style={styles.wishlistButton}
+          onPress={(e) => {
+            e.stopPropagation();
+            onToggleWishlist?.();
+          }}
+        >
+          <FontAwesome name="heart" size={24} color="#4F46E5" />
+        </TouchableOpacity>
+      </Pressable>
+    </Link>
   );
 };
 
