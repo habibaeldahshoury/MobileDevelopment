@@ -18,13 +18,10 @@ const ProductsContext = createContext<ProductsValue | null>(null);
 // 2. the provider owns the state and wraps the whole app (see app/_layout.tsx)
 export function ProductsProvider({ children }: { children: ReactNode }) {
   const [products] = useState<Product[]>(PRODUCTS);
-  const [wishlist, setWishlist] = useState<string[]>(["1", "2"]);
 
-  const [cart, setCart] = useState<{ id: string; quantity: number }[]>([
-    { id: "1", quantity: 1 },
-    { id: "2", quantity: 1 },
-    { id: "3", quantity: 1 },
-  ]);
+  const [wishlist, setWishlist] = useState<string[]>([]);
+  const [cart, setCart] = useState<{ id: string; quantity: number }[]>([]);
+
   const incrementQuantity = (id: string) => {
     setCart((prev) =>
       prev.map((item) =>
