@@ -186,6 +186,8 @@ export default function ProfileScreen() {
         <View className="overflow-hidden rounded-2xl border border-gray-200 bg-surface">
           <MenuRow label="Order history" onPress={() => router.push('/order-history')} />
 
+          <MenuRow label="My wishlist" onPress={() => router.push('/wishlist')} />
+
           <MenuRow label="Track order" onPress={() => router.push('/track-order')} />
 
           <MenuRow

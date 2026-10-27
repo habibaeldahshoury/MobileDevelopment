@@ -20,7 +20,6 @@ type Message = {
 
 const AGENT_NAME = 'Mariam';
 
-// Stand-in for a real support backend: picks a canned reply by keyword.
 function getAgentReply(text: string) {
   const message = text.toLowerCase();
   if (/(order|deliver|ship|track)/.test(message)) {

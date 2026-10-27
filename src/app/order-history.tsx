@@ -61,7 +61,6 @@ const ORDERS: Order[] = [
   },
 ];
 
-// Badge colours: indigo for delivered, amber for in progress, grey for cancelled.
 const STATUS_CLASSES: Record<OrderStatus, { badge: string; text: string }> = {
   Delivered: { badge: 'bg-primary/10', text: 'text-primary' },
   Processing: { badge: 'bg-accent/15', text: 'text-foreground' },
@@ -101,6 +100,18 @@ function OrderCard({ order }: { order: Order }) {
         </View>
         <Pressable
           accessibilityRole="button"
+          onPress={() =>
+            router.push({
+              pathname: '/track-order',
+              params: {
+                id: order.id,
+                items: order.items.map(item => item.name).join(', '),
+                total: order.total,
+                date: order.date,
+                status: order.status,
+              },
+            })
+          }
           className="rounded-xl bg-primary px-4 py-2.5 active:opacity-70">
           <Text className="text-[13px] font-semibold text-white">View details</Text>
         </Pressable>

@@ -6,8 +6,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Slot, router, usePathname, type Href } from 'expo-router';
 import { Host, SearchBar, Icon, NavigationBar, NavigationBarItem, Text } from '@expo/ui/jetpack-compose';
 import colors from '../theme/colors';
+import { ProductsProvider } from '../context/products';
 
-// Maps the palette onto the Material 3 roles the Compose components use.
 const MATERIAL_COLORS = {
   primary: colors.primary,
   onPrimary: colors.surface,
@@ -35,11 +35,8 @@ const TABS: { href: Href; label: string; icon: number }[] = [
 
 export default function RootLayout() {
   const pathname = usePathname();
-  // Sub-pages keep their parent tab highlighted.
-  const activeTab = ['/order-history', '/track-order', '/support-chat'].includes(pathname) ? '/profile' : pathname;
-  const showSearch = pathname === '/';
-  // Bumping the key remounts the search bar, which closes its full-screen view
-  // (@expo/ui has no prop to collapse it from JS).
+  const activeTab = ['/order-history', '/track-order', '/support-chat', '/wishlist'].includes(pathname) ? '/profile' : pathname;
+  const showSearch = pathname === '/' || pathname === '/search-results' || pathname.startsWith('/category/');
   const [searchKey, setSearchKey] = useState(0);
 
   const submitSearch = (searchText: string) => {
@@ -48,49 +45,50 @@ export default function RootLayout() {
   };
 
   return (
-    <SafeAreaView edges={['top']} className="flex-1 bg-background">
-      {showSearch ? (
-        <View className="self-center my-4">
-          <Host key={searchKey} matchContents colorOverrides={MATERIAL_COLORS}>
-            <SearchBar onSearch={submitSearch}>
-              <SearchBar.Placeholder>
-                <Text>Search products</Text>
-              </SearchBar.Placeholder>
-              <SearchBar.ExpandedFullScreenSearchBar>
-                <Text>Press search on the keyboard to see results</Text>
-              </SearchBar.ExpandedFullScreenSearchBar>
-            </SearchBar>
+    <ProductsProvider>
+      <SafeAreaView edges={['top']} className="flex-1 bg-background">
+        {showSearch ? (
+          <View className="self-center my-4">
+            <Host key={searchKey} matchContents colorOverrides={MATERIAL_COLORS}>
+              <SearchBar onSearch={submitSearch}>
+                <SearchBar.Placeholder>
+                  <Text>Search products</Text>
+                </SearchBar.Placeholder>
+                <SearchBar.ExpandedFullScreenSearchBar>
+                  <Text>Press search on the keyboard to see results</Text>
+                </SearchBar.ExpandedFullScreenSearchBar>
+              </SearchBar>
+            </Host>
+          </View>
+        ) : null}
+
+        <View className={`flex-1 ${showSearch ? '' : 'pt-4'}`}>
+          <Slot />
+        </View>
+
+        <View className="w-full">
+          <Host matchContents={{ vertical: true }} colorOverrides={MATERIAL_COLORS}>
+            <NavigationBar containerColor={colors.surface}>
+              {TABS.map(tab => (
+                <NavigationBarItem
+                  key={tab.label}
+                  colors={TAB_COLORS}
+                  selected={activeTab === tab.href}
+                  onClick={() => router.replace(tab.href)}>
+                  <NavigationBarItem.Icon>
+                    <Icon source={tab.icon} />
+                  </NavigationBarItem.Icon>
+                  <NavigationBarItem.Label>
+                    <Text>{tab.label}</Text>
+                  </NavigationBarItem.Label>
+                </NavigationBarItem>
+              ))}
+            </NavigationBar>
           </Host>
         </View>
-      ) : null}
 
-      {/* The current route's screen (src/app/index.tsx, categories.tsx, ...) renders here. */}
-      <View className={`flex-1 ${showSearch ? '' : 'pt-4'}`}>
-        <Slot />
-      </View>
-
-      <View className="w-full">
-        <Host matchContents={{ vertical: true }} colorOverrides={MATERIAL_COLORS}>
-          <NavigationBar containerColor={colors.surface}>
-            {TABS.map(tab => (
-              <NavigationBarItem
-                key={tab.label}
-                colors={TAB_COLORS}
-                selected={activeTab === tab.href}
-                onClick={() => router.replace(tab.href)}>
-                <NavigationBarItem.Icon>
-                  <Icon source={tab.icon} />
-                </NavigationBarItem.Icon>
-                <NavigationBarItem.Label>
-                  <Text>{tab.label}</Text>
-                </NavigationBarItem.Label>
-              </NavigationBarItem>
-            ))}
-          </NavigationBar>
-        </Host>
-      </View>
-
-      <StatusBar style="auto" />
-    </SafeAreaView>
+        <StatusBar style="auto" />
+      </SafeAreaView>
+    </ProductsProvider>
   );
 }

@@ -1,13 +1,12 @@
 import { ScrollView, Text, View } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
-import { ProductCard } from '../components/ProductCard';
-import { products } from '../data/products';
+import { ProductCard } from '@/components/ProductCardSearch';
+import { products } from '@/data/products';
 
 function normalizeText(value: string) {
   return value.toLowerCase().replace(/[^a-z0-9]/g, '');
 }
 
-// Opened from the search bar in the root layout with the text in `?q=`.
 export default function SearchResultsScreen() {
   const { q } = useLocalSearchParams<{ q?: string }>();
   const query = (q ?? '').trim();

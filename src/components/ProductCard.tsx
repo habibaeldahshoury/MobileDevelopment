@@ -1,34 +1,31 @@
-import { Pressable, Text, View } from 'react-native';
-import type { Product } from '../data/products';
+import { Pressable, Text, Image, View } from "react-native";
 
-export function ProductCard({ product }: { product: Product }) {
+type Props = {
+  name: string;
+  price: number;
+  oldPrice?: number;
+  image: string;
+  onPress: () => void;
+};
+
+export default function ProductCard({ name, price, oldPrice, image, onPress }: Props) {
   return (
-    <View className="gap-1 rounded-2xl border border-gray-200 bg-surface p-3.5">
-      <View className="flex-row items-center gap-2">
-        <Text numberOfLines={1} className="flex-1 text-[15px] font-bold text-foreground">
-          {product.name}
-        </Text>
-        {product.oldPrice ? (
-          <View className="rounded-full bg-accent px-2 py-0.5">
+    <Pressable onPress={onPress} className="flex-1 rounded-2xl bg-surface p-3 active:opacity-80">
+      <Text className="text-[15px] font-semibold text-foreground" numberOfLines={1}>
+        {name}
+      </Text>
+      <View className="mt-0.5 flex-row items-baseline gap-1.5">
+        <Text className="text-[15px] font-bold text-primary">{price} EGP</Text>
+        {oldPrice ? <Text className="text-xs text-muted line-through">{oldPrice} EGP</Text> : null}
+      </View>
+      <View className="mt-2.5">
+        <Image source={{ uri: image }} className="h-[170px] w-full rounded-xl bg-gray-200" />
+        {oldPrice ? (
+          <View className="absolute left-2 top-2 rounded-full bg-accent px-2 py-0.5">
             <Text className="text-[10px] font-bold text-foreground">SALE</Text>
           </View>
         ) : null}
       </View>
-
-      <Text className="text-[13px] text-muted">
-        {product.category} · <Text className="font-semibold text-accent">★ {product.rating}</Text>
-      </Text>
-
-      <View className="flex-row items-center gap-2">
-        <Text className="text-[15px] font-bold text-foreground">{product.price}</Text>
-        <Text className="flex-1 text-xs text-muted line-through">{product.oldPrice ?? ''}</Text>
-        <Pressable
-          accessibilityRole="button"
-          accessibilityLabel={`Add ${product.name} to cart`}
-          className="rounded-full bg-primary px-3.5 py-1.5 active:opacity-70">
-          <Text className="text-xs font-bold text-white">Add</Text>
-        </Pressable>
-      </View>
-    </View>
+    </Pressable>
   );
 }
