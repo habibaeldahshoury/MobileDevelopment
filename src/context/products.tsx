@@ -9,6 +9,7 @@ type ProductsValue = {
   incrementQuantity: (id: string) => void;
   decrementQuantity: (id: string) => void;
   removeFromCart: (id: string) => void;
+  clearCart: () => void;
 };
 
 // 1. create the context (the "shared box")
@@ -43,6 +44,9 @@ export function ProductsProvider({ children }: { children: ReactNode }) {
   const removeFromCart = (id: string) => {
     setCart((prev) => prev.filter((item) => item.id !== id));
   };
+  const clearCart = () => {
+    setCart([]);
+  };
 
   const value: ProductsValue = {
     products,
@@ -55,6 +59,7 @@ export function ProductsProvider({ children }: { children: ReactNode }) {
     incrementQuantity,
     decrementQuantity,
     removeFromCart,
+    clearCart,
   };
 
   return (
