@@ -1,12 +1,12 @@
 import { FlatList, Text, View, StyleSheet } from "react-native";
 import { router, Stack, useLocalSearchParams } from "expo-router";
-import { CATEGORIES } from "../data/categories";
-import { products } from "../data/products";
-import { colors } from "../constants/colors";
-import ProductCard from "../components/ProductCard";
+import { CATEGORIES } from "@/app/data/categories";
+import { products } from "@/app/data/products";
+import { colors } from "@/constants/colors";
+import ProductCard from "@/components/ProductCard";
 
 export default function CategoryScreen() {
-  const { id } = useLocalSearchParams<{ id: string }>();
+  const { id } = useLocalSearchParams<{ id?: string | string[] }>();
   const categoryId = Array.isArray(id) ? id[0] : id;
   const category = CATEGORIES.find((item) => item.id === categoryId);
   const categoryProducts = products.filter((item) => item.categoryId === categoryId);
