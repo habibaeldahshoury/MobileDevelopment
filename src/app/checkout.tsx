@@ -11,8 +11,8 @@ import PaymentMethodAccordion, {
   PaymentMethod,
 } from "@/components/checkout/PaymentMethodAccordion";
 import { useProducts } from "@/context/products";
-import { router } from "expo-router";
-import { useState } from "react";
+import { router, useLocalSearchParams } from "expo-router";
+import { useEffect, useState } from "react";
 import {
   KeyboardAvoidingView,
   Platform,
@@ -27,11 +27,24 @@ import { scale } from "react-native-size-matters";
 export default function CheckoutScreen() {
   const { products, cart, clearCart } = useProducts();
 
-  const [address, setAddress] = useState<DeliveryAddress | null>({
-    name: "Mostafa Makram",
-    street: "123 Cairo University St",
-    city: "Giza",
-  });
+  //1 start with null so it shows"Tap to select your delivery location"
+  const [address, setAddress] = useState<DeliveryAddress | null>(null);
+  //2listen for coordinates returned from the map screen
+  const params = useLocalSearchParams<{ street?: string; city?: string }>();
+  useEffect(() => {
+    if (params.street) {
+      setAddress({
+        name: "Selected Location",
+        street: params.street,
+        city: params.city || "",
+      });
+      setErrors((prev) => {
+        const updated = { ...prev };
+        delete updated.address;
+        return updated;
+      });
+    }
+  }, [params.street, params.city]);
 
   const [deliveryMethod, setDeliveryMethod] =
     useState<DeliveryMethod>("standard");

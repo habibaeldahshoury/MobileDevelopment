@@ -35,7 +35,9 @@ export default function AddressCard({
             <>
               <Text style={styles.addressName}>{address.name}</Text>
               <Text style={styles.addressStreet}>
-                {address.street}, {address.city}
+                {address.city
+                  ? `${address.street}, ${address.city}`
+                  : address.street}
               </Text>
             </>
           ) : (
