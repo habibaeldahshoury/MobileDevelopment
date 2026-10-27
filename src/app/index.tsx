@@ -1,8 +1,8 @@
 import { StyleSheet } from "react-native";
-import Wishlist from "./wishlist";
+import Cart from "./cart";
 
 export default function Index() {
-  return <Wishlist />;
+  return <Cart />;
 }
 
 /*<View style={styles.container}>
