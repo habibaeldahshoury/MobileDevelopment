@@ -36,7 +36,7 @@ const TABS: { href: Href; label: string; icon: number }[] = [
 export default function RootLayout() {
   const pathname = usePathname();
   // Sub-pages keep their parent tab highlighted.
-  const activeTab = ['/order-history', '/support-chat'].includes(pathname) ? '/profile' : pathname;
+  const activeTab = ['/order-history', '/track-order', '/support-chat'].includes(pathname) ? '/profile' : pathname;
   const showSearch = pathname === '/';
   // Bumping the key remounts the search bar, which closes its full-screen view
   // (@expo/ui has no prop to collapse it from JS).
