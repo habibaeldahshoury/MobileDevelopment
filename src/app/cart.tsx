@@ -6,6 +6,7 @@ import { Link } from "expo-router";
 import {
   FlatList,
   Image,
+  SafeAreaView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -46,7 +47,7 @@ export default function CartScreen() {
   const total = Math.max(0, subtotal - discount + shipping);
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <BackButton />
         <Text style={styles.title}>My Cart</Text>
@@ -121,7 +122,7 @@ export default function CartScreen() {
           </Link>
         </View>
       )}
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -132,7 +133,7 @@ const styles = StyleSheet.create({
   },
   header: {
     flexDirection: "row",
-    marginTop: scale(20),
+    marginTop: scale(10),
     marginHorizontal: scale(10),
     paddingTop: scale(30),
   },

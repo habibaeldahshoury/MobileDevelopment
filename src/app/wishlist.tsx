@@ -1,4 +1,11 @@
-import { FlatList, Image, StyleSheet, Text, View } from "react-native";
+import {
+  FlatList,
+  Image,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { scale } from "react-native-size-matters";
 import BackButton from "../components/BackButton";
 import ProductCardWishlist from "../components/ProductCardWishlist";
@@ -9,7 +16,7 @@ export default function WishlistScreen() {
   const wishlist = products.filter((p) => isWishlisted(p.id));
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <BackButton />
         <Text style={styles.title}>My Wishlist</Text>
@@ -43,7 +50,7 @@ export default function WishlistScreen() {
           </View>
         }
       />
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -59,7 +66,7 @@ const styles = StyleSheet.create({
   },
   header: {
     flexDirection: "row",
-    marginTop: scale(20),
+    marginTop: scale(10),
     marginHorizontal: scale(10),
     paddingTop: scale(30),
   },
