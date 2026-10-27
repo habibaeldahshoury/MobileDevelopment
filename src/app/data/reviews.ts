@@ -1,0 +1,17 @@
+export const reviews = [
+  { id: "r1", productId: "p1", user: "Sara", rating: 5, comment: "Great fit and very soft!" },
+  { id: "r2", productId: "p1", user: "Omar", rating: 4, comment: "Good quality for the price." },
+  { id: "r3", productId: "p1", user: "Nour", rating: 5, comment: "Exactly like the photos." },
+  { id: "r4", productId: "p1", user: "Youssef", rating: 3, comment: "A bit loose, order one size down." },
+  { id: "r5", productId: "p2", user: "Ali", rating: 4, comment: "Comfortable and stretchy." },
+  { id: "r6", productId: "p2", user: "Mona", rating: 5, comment: "Love the color." },
+  { id: "r7", productId: "p2", user: "Karim", rating: 4, comment: "Fits well." },
+  { id: "r8", productId: "p3", user: "Laila", rating: 5, comment: "So pretty and light." },
+  { id: "r9", productId: "p3", user: "Dina", rating: 4, comment: "Perfect for summer." },
+  { id: "r10", productId: "p4", user: "Hana", rating: 5, comment: "Goes with everything." },
+  { id: "r11", productId: "p4", user: "Salma", rating: 4, comment: "Nice fabric." },
+  { id: "r12", productId: "p5", user: "Tamer", rating: 5, comment: "My son loves it." },
+  { id: "r13", productId: "p5", user: "Rana", rating: 4, comment: "Warm and cozy." },
+  { id: "r14", productId: "p6", user: "Hady", rating: 4, comment: "Good for sports." },
+  { id: "r15", productId: "p6", user: "Mariam", rating: 3, comment: "Okay, the color faded a bit." },
+];
